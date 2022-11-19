@@ -24,6 +24,15 @@ def load_dataset(batch_size):
 
 
 def save_checkpoint(ckp_path, model, epoch, optimizer, loss):
+    """
+    This function will save the checkpoint at the checkpoint path.
+    :param ckp_path: checkpoint path,
+    :param model: model,
+    :param epoch: epoch,
+    :param optimizer: optimizer,
+    :param loss: loss,
+    :return: nothing.
+    """
     checkpoint = {
         'epoch': epoch,
         'model_state_dict': model.state_dict(),
@@ -34,6 +43,13 @@ def save_checkpoint(ckp_path, model, epoch, optimizer, loss):
 
 
 def load_checkpoint(ckp_path, model, optimizer):
+    """
+    This function will load the checkpoint.
+    :param ckp_path: checkpoint path,
+    :param model: model,
+    :param optimizer: optimizer,
+    :return: model, optimizer, epoch, loss.
+    """
     checkpoint = torch.load(ckp_path)
     model.load_state_dict(checkpoint['model_state_dict'])
     optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
@@ -44,8 +60,16 @@ def load_checkpoint(ckp_path, model, optimizer):
 
 def train(train_loader, ckp_path, model, optimizer, num_epochs, device, writer):
     """
-    Training the network for a given number of epochs
-    The loss after every epoch is printed
+    This function is for training the network for a given number of epochs.
+    The loss after every epoch is printed.
+    :param train_loader: train dataset,
+    :param ckp_path: checkpoint path,
+    :param model: model,
+    :param optimizer: optimizer,
+    :param num_epochs: total number of epochs,
+    :param device: device,
+    :param writer: writer for tensorboard,
+    :return: nothing.
     """
     print(f'Entering into the training loop...')
     wandb.watch(model)
@@ -93,9 +117,9 @@ def generate_image_from_random_test_image(test_loader, model, device):
     """
     This function will select an image from the test dataset,
     feed that image to the trained model, and generate a similar image.
-    :param test_loader: the test dataset
-    :param model: the trained model
-    :param device: the selected device
+    :param test_loader: the test dataset,
+    :param model: the trained model,
+    :param device: the selected device.
     """
     with torch.no_grad():
         for data in random.sample(list(test_loader), 1):
@@ -120,6 +144,12 @@ def generate_image_from_random_test_image(test_loader, model, device):
 
 
 def generate_image_with_random_z(model):
+    """
+    This function will initialize z with truncated normal distribution,
+    and generate images with z.
+    :param model: trained model,
+    :return: generated image.
+    """
     with torch.no_grad():
         # z = torch.rand(1, 256)
         # print(z)
@@ -132,5 +162,4 @@ def generate_image_with_random_z(model):
         generated_image = np.squeeze(generated_image)
         plt.imshow(generated_image)
         # plt.show()
-
     return generated_image
