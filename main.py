@@ -15,7 +15,7 @@ if __name__ == '__main__':
     # Determine if any GPUs are available
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    # Initialize hyperparameters
+    # Initialize hyper-parameters
     batch_size = 1000
     learning_rate = 1e-3
     num_epochs = 100

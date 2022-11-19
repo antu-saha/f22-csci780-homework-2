@@ -71,7 +71,7 @@ def train(train_loader, ckp_path, model, optimizer, num_epochs, device, writer):
     :param writer: writer for tensorboard,
     :return: nothing.
     """
-    print(f'Entering into the training loop...')
+    print(f'Entering into the training loop.....')
     wandb.watch(model)
     n_total_steps = len(train_loader)
     running_loss = 0.0
